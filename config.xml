@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget id= "com.browning.countlessskies"
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        version     = "1.0.0" >
+
+    <name>Countless Skies</name>
+
+    <description>
+        Countless Skies UK band app
+    </description>
+
+    <author>
+        James Browning
+    </author>
+
+    <!-- platforms -->
+    <gap:platform name="android" />
+
+    <!-- screen/display -->
+    <preference name="orientation" value="portrait" />
+    <preference name="DisallowOverscroll" value="true" />
+
+    <!-- permissions -->
+    <preference name="permissions" value="none"/>
+
+    <!-- icons -->
+    <icon src="icon.png" />
+
+    <!-- Features -->
+    <feature name="http://api.phonegap.com/1.0/network" />
+
+    <!-- InAppBrowser -->
+    <access origin="*" />
+    <gap:plugin name="cordova-plugin-inappbrowser" source="npm" />
+
+    </widget>
