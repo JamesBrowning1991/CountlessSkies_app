@@ -1,5 +1,10 @@
-// Function to make content of main page fade in
+// Global variables
+var currentPage = "";
+var jsonWorking = false;
+
+// Function to make content of Main page fade in
 var mainPageSetup = function() {
+  currentPage = "main";
   $("#logo").hide();
   $("#button-ul").hide();
   $("#logo").fadeIn(1000);
@@ -8,73 +13,97 @@ var mainPageSetup = function() {
 
 // Function to set up Gigs page
 var setupGigsPage = function() {
+  currentPage = "gigs";
   $("#logo").animate({marginTop: "-=15%"}, 1000);
   $("#button-ul").animate({marginTop: "+=15%"}, {duration: 1000, queue: false});
   $("#button-ul").fadeOut(1000, function() {
-    //$("h1").text("Comming soon..").hide().fadeIn(500);
-    gigsInfo()
+    gigsInfo();
   })
-};
+}
+
+// Function to go from Gigs page back to Main page
+var gigsPageToMainpage = function() {
+  currentPage = "main";
+  $("h1").text("");
+  $("#logo").animate({marginTop: "+=15%"}, 1000);
+  $("#button-ul").animate({marginTop: "-=15%"}, {duration: 1000, queue: false});
+  $("#button-ul").fadeIn(1000);
+}
 
 
 // Function to get gigs info and display CANT GET THIS TO WORK, NEED PROXY http://www.ajax-cross-origin.com/how.html
 var gigsInfo = function() {
-  //var url = "http://api.bandsintown.com/artists/CountlessSkies/events.json?app_id=123"
-
+  jsonWorking = true;
   $.ajax({
-    url: "http://api.bandsintown.com/artists/CountlessSkies/events.json?app_id=123",
+    url: "http://api.bandsintown.com/artists/CountlessSkies/events.json?app_id=officialCSMobileApp",
     dataType: 'jsonp'
   })
     .done(function( data ) {
-      if ( console && console.log ) {
-        $('h1').text(JSON.stringify(data));
-      }
+      $('h1').text(JSON.stringify(data));
+    })
+    .fail(function() {
+        $('h1').text("No Internet Connection");
+    })
+    .always(function() {
+      jsonWorking = false;
     });
 }
 
 
+// START APP
+
 // fade in on startup
 mainPageSetup();
 
-// // // // THESE DON'T APPEAR TO BE DOING ANYTHING
-// // // Wait for device API libraries to load
-// // function onLoad() {
-// document.addEventListener("deviceready", onDeviceReady, false);
-// // }
-//
-// // Add onResume event listener
-// function onDeviceReady() {
-//   document.addEventListener("resume", onResume, false);
-//   document.addEventListener("pause", onPause, false);
-// }
-// // Handle the resume event
-// function onResume() {
-//   mainPageSetup();
-// }
-//
-// function onPause() {
-//   $("#logo").hide();
-//   $("#button-ul").hide();
-// }
+// Handle the back button on each page
+function onBackKeyDown() {
+  if($('#website-button').is(':animated') || $('ul').is(':animated') || jsonWorking === true) { return false; }
+  else{
+    if (currentPage === "main") {
+      navigator.app.exitApp();
+    }else if (currentPage === "gigs"){
+      gigsPageToMainpage();
+    }else{
+      mainPageSetup();
+    }
+  }
+}
 
+// Handle the resume event
+function onResume() {
+  return null;
+}
+
+// Handle the pause event
+function onPause() {
+  return null;
+}
 
 // Make website button work
 $("#website-button").click(function() {
-  var ref1 = cordova.InAppBrowser.open('http://www.countlessskies.com', '_system', 'location=yes');
+  if($('#website-button').is(':animated') || $('#logo').is(':animated')) { return false; }
+  else{
+    var ref1 = cordova.InAppBrowser.open('http://www.countlessskies.com', '_system', 'location=yes');
+  }
 });
 
 // Make facebook button work
 $("#facebook-button").click(function() {
-  var ref2 = cordova.InAppBrowser.open('https://www.facebook.com/CountlessSkies', '_system', 'location=yes');
+  if($('#facebook-button').is(':animated') || $('#logo').is(':animated')) { return false; }
+  else{
+    var ref2 = cordova.InAppBrowser.open('https://www.facebook.com/CountlessSkies', '_system', 'location=yes');
+  }
 });
 
 // Make gigs button work
-$("#gigs-button").click(setupGigsPage);
+$('#gigs-button').click(function() {
+  if($('#gigs-button').is(':animated') || $('#logo').is(':animated')) { return false; }
+  else{
+    setupGigsPage();
+  }
+})
 
 // Make h1 go back to main work
 $("h1").click(function() {
-  $("h1").hide();
-  $("#logo").animate({marginTop: "+=15%"}, 0);
-  $("#button-ul").animate({marginTop: "-=15%"}, 0);
-  mainPageSetup();
+  gigsPageToMainpage();
 });
