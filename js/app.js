@@ -23,11 +23,11 @@ var gigsInfo = function() {
 
   $.ajax({
     url: "http://api.bandsintown.com/artists/CountlessSkies/events.json?app_id=123",
-    crossDomain: true
+    dataType: 'jsonp'
   })
     .done(function( data ) {
       if ( console && console.log ) {
-        console.log( data );
+        $('h1').text(JSON.stringify(data));
       }
     });
 }
