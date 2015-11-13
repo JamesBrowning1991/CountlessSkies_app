@@ -39,7 +39,17 @@ var gigsInfo = function() {
     dataType: 'jsonp'
   })
     .done(function( data ) {
-      $('h1').text(JSON.stringify(data));
+      //$('h1').text(JSON.stringify(data));
+      var dates = [];
+      var venueNames = [];
+      var venueCitys = [];
+      $.each(data, function(i, v) {
+        dates.push(v.datetime);
+        venueNames.push(v.venue.name)
+        venueCitys.push(v.venue.city)
+       $('h1').text("Dates: " + dates + "  Venues: " + venueNames +
+        "  Venue Citys: " + venueCitys);
+      })
     })
     .fail(function() {
         $('h1').text("No Internet Connection");
