@@ -5,10 +5,22 @@ var jsonWorking = false;
 // Function to make content of Main page fade in
 var mainPageSetup = function() {
   currentPage = "main";
-  $("#logo").hide();
   $("#button-ul").hide();
+  $("#logo").hide();
+  $("#logo").attr("src", "images/index/logo.png");
+  $('#button-ul').append('"<div id="website-button"><a class="buttons">Website</a></div><div id="facebook-button"><a class="buttons">Facebook</a></div><div id="story-button"><a class="buttons">Story Time</a></div><div id="gigs-button"><a class="buttons">Gigs</a></div>');
   $("#logo").fadeIn(1000);
   $("#button-ul").fadeIn(1000);
+}
+
+// Funcation to set up Story Time page
+var setupStoryPage = function () {
+  currentPage = "story";
+  $("#logo").animate({marginTop: "-=15%"}, 1000);
+  $("#button-ul").animate({marginTop: "+=15%"}, {duration: 1000, queue: false});
+  $("#button-ul").fadeOut(1000, function() {
+    $("h1").text("Coming Soon..");
+  })
 }
 
 // Function to set up Gigs page
@@ -31,7 +43,7 @@ var gigsPageToMainpage = function() {
 }
 
 
-// Function to get gigs info and display CANT GET THIS TO WORK, NEED PROXY http://www.ajax-cross-origin.com/how.html
+// Function to get gigs info and display
 var gigsInfo = function() {
   jsonWorking = true;
   $.ajax({
@@ -39,7 +51,6 @@ var gigsInfo = function() {
     dataType: 'jsonp'
   })
     .done(function( data ) {
-      //$('h1').text(JSON.stringify(data));
       var dates = [];
       var venueNames = [];
       var venueCitys = [];
@@ -104,6 +115,14 @@ $("#facebook-button").click(function() {
     var ref2 = cordova.InAppBrowser.open('https://www.facebook.com/CountlessSkies', '_system', 'location=yes');
   }
 });
+
+// Make story time button work
+$('#story-button').click(function() {
+  if($('#story-button').is(':animated') || $('#logo').is(':animated')) { return false; }
+  else{
+    setupStoryPage();
+  }
+})
 
 // Make gigs button work
 $('#gigs-button').click(function() {
