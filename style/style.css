@@ -3,7 +3,12 @@ body {
   /*box-sizing: border-box;*/
 }
 
-h1 {
+/*USE WHEN READY TO FIDDLE WITH MARGINS ETC*/
+/*#pageContent {
+  margin: 15% 12.5%;
+}*/
+
+#test-p {
   color: white;
   text-align: center;
   font-size: 1em;
@@ -11,15 +16,15 @@ h1 {
   word-wrap: break-word;
 }
 
+ul {
+  padding: 0;
+}
+
 #logo {
   display: block;
   margin: 33.3% auto 0 auto;
   width: 90%;
   align-self: center;
-}
-
-ul {
-  padding: 0;
 }
 
 #button-ul {
@@ -60,4 +65,24 @@ ul {
   background:rgba(10,10,10,0.5);
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#634b30', endColorstr='#7d5d3b',GradientType=0);
 	background-color:#634b30;
+}
+
+#storyphotos-ul {
+  display: inline-block;
+  margin: 15% 12.5%;
+  width: auto;
+}
+
+.band-images {
+  float:left;
+  width: 50%;
+}
+
+.band-images p {
+  color: white;
+  text-align: center;
+}
+
+.band-images img {
+  width: 100%;
 }

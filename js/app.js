@@ -5,10 +5,22 @@ var jsonWorking = false;
 // Function to make content of Main page fade in
 var mainPageSetup = function() {
   currentPage = "main";
-  $("#button-ul").hide();
   $("#logo").hide();
+  $("#button-ul").hide();
+  $("#storyphotos-ul").hide();
   $("#logo").attr("src", "images/index/logo.png");
-  $('#button-ul').append('"<div id="website-button"><a class="buttons">Website</a></div><div id="facebook-button"><a class="buttons">Facebook</a></div><div id="story-button"><a class="buttons">Story Time</a></div><div id="gigs-button"><a class="buttons">Gigs</a></div>');
+  $('#button-ul').html(`
+    <div id="website-button">
+      <a class="buttons">Website</a>
+    </div>
+    <div id="facebook-button">
+      <a class="buttons">Facebook</a>
+    </div><div id="story-button">
+      <a class="buttons">Story Time</a>
+    </div>
+    <div id="gigs-button">
+      <a class="buttons">Gigs</a>
+    </div>`);
   $("#logo").fadeIn(1000);
   $("#button-ul").fadeIn(1000);
 }
@@ -19,8 +31,25 @@ var setupStoryPage = function () {
   $("#logo").animate({marginTop: "-=15%"}, 1000);
   $("#button-ul").animate({marginTop: "+=15%"}, {duration: 1000, queue: false});
   $("#button-ul").fadeOut(1000, function() {
-    $("h1").text("Coming Soon..");
+    $('#storyphotos-ul').html(`
+    <div class="band-images">
+      <img src="images/storytime/ross1_cropped.jpg" alt="Ross">
+      <p>Rose King<p>
+    </div>
+    <div class="band-images">
+      <img src="images/storytime/pratt2_cropped.jpg" alt="Pratt">
+      <p>James Pratt<p>
+    </div>
+    <div class="band-images">
+      <img src="images/storytime/phil2_cropped.jpg" alt="Phil">
+      <p>Phil Romeo<p>
+    </div>
+    <div class="band-images">
+      <img src="images/storytime/nathan1_cropped.jpg" alt="Nathix">
+      <p>Nathan Rob<p>
+    </div>`);
   })
+  $('#storyphotos-ul').fadeIn(1000);
 }
 
 // Function to set up Gigs page
@@ -36,10 +65,14 @@ var setupGigsPage = function() {
 // Function to go from Gigs page back to Main page
 var gigsPageToMainpage = function() {
   currentPage = "main";
-  $("h1").text("");
+  $("#test-p").text("");
   $("#logo").animate({marginTop: "+=15%"}, 1000);
   $("#button-ul").animate({marginTop: "-=15%"}, {duration: 1000, queue: false});
   $("#button-ul").fadeIn(1000);
+}
+
+var storyPageToMainpage = function() {
+  gigsPageToMainpage();
 }
 
 
@@ -58,12 +91,12 @@ var gigsInfo = function() {
         dates.push(v.datetime);
         venueNames.push(v.venue.name)
         venueCitys.push(v.venue.city)
-       $('h1').text("Dates: " + dates + "  Venues: " + venueNames +
+       $('#test-p').text("Dates: " + dates + "  Venues: " + venueNames +
         "  Venue Citys: " + venueCitys);
       })
     })
     .fail(function() {
-        $('h1').text("No Internet Connection");
+        $('#test-p').text("No Internet Connection");
     })
     .always(function() {
       jsonWorking = false;
@@ -84,8 +117,10 @@ function onBackKeyDown() {
       navigator.app.exitApp();
     }else if (currentPage === "gigs"){
       gigsPageToMainpage();
+    }else if (currentPage === "story"){
+      storyPageToMainpage;
     }else{
-      mainPageSetup();
+      currentPage === "story"
     }
   }
 }
@@ -132,7 +167,7 @@ $('#gigs-button').click(function() {
   }
 })
 
-// Make h1 go back to main work
-$("h1").click(function() {
+// Make #test-p go back to main work
+$("#test-p").click(function() {
   gigsPageToMainpage();
 });

@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="style/nativefeel.css">
     <link rel="stylesheet" href="style/style.css">
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-    <script src="handlebars-v4.0.4.js"></script>
     <script type="text/javascript" charset="utf-8">
       // Wait for device API libraries to load
       function onLoad() {
@@ -22,11 +21,13 @@
     </script>
   </head>
   <body onload="onLoad()">
-    <div id="main_page">
+    <div id="entire_page">
       <img id="logo" src="" alt="Countless Skies logo"> <!-- add src in mainPageSetup -->
-      <h1></h1> <!-- header is populated with gig info in mainPageSetup -->
-      <ul id="button-ul"></ul> <!-- header is populated with gig info in mainPageSetup -->
-      <ul id="storyphotos-ul"></ul> <!-- header is populated with band photos info setupStoryPage -->
+      <div id="pageContent">
+        <p id="test-p"></p> <!-- test-p is used for test purposes only -->
+        <ul id="button-ul"></ul> <!-- header is populated with gig info in mainPageSetup -->
+        <ul id="storyphotos-ul"></ul> <!-- header is populated with band photos info setupStoryPage -->
+      </div>
     </div>
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/app.js"></script>
