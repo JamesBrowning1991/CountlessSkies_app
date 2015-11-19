@@ -30,25 +30,25 @@ var setupStoryPage = function () {
   currentPage = "story";
   $("#logo").animate({marginTop: "-=15%"}, 1000);
   $("#button-ul").animate({marginTop: "+=15%"}, {duration: 1000, queue: false});
-  $("#button-ul").fadeOut(1000, function() {
-    $('#storyphotos-ul').html(`
-    <div class="band-images">
-      <img src="images/storytime/ross1_cropped.jpg" alt="Ross">
-      <p>Rose King<p>
-    </div>
-    <div class="band-images">
-      <img src="images/storytime/pratt2_cropped.jpg" alt="Pratt">
-      <p>James Pratt<p>
-    </div>
-    <div class="band-images">
-      <img src="images/storytime/phil2_cropped.jpg" alt="Phil">
-      <p>Phil Romeo<p>
-    </div>
-    <div class="band-images">
-      <img src="images/storytime/nathan1_cropped.jpg" alt="Nathix">
-      <p>Nathan Rob<p>
-    </div>`);
-  })
+  $("#button-ul").fadeOut(1000);
+  $('#storyphotos-ul').html(`
+  <div class="band-images">
+    <img src="images/storytime/ross1_cropped.jpg" alt="Ross">
+    <p>Rose King<p>
+  </div>
+  <div class="band-images">
+    <img src="images/storytime/pratt2_cropped.jpg" alt="Pratt">
+    <p>James Pratt<p>
+  </div>
+  <div class="band-images">
+    <img src="images/storytime/phil2_cropped.jpg" alt="Phil">
+    <p>Phil Romeo<p>
+  </div>
+  <div class="band-images">
+    <img src="images/storytime/nathan1_cropped.jpg" alt="Nathix">
+    <p>Nathan Rob<p>
+  </div>`);
+  $("#storyphotos-ul").animate({marginTop: "+=15%"}, {duration: 1000, queue: false});
   $('#storyphotos-ul').fadeIn(1000);
 }
 
@@ -72,7 +72,12 @@ var gigsPageToMainpage = function() {
 }
 
 var storyPageToMainpage = function() {
-  gigsPageToMainpage();
+  currentPage = "main";
+  $("#logo").animate({marginTop: "+=15%"}, 1000);
+  $("#storyphotos-ul").animate({marginTop: "-=15%"}, {duration: 1000, queue: false});
+  $('#storyphotos-ul').fadeOut(1000);
+  $("#button-ul").animate({marginTop: "-=15%"}, {duration: 1000, queue: false});
+  $("#button-ul").fadeIn(1000);
 }
 
 
@@ -118,7 +123,7 @@ function onBackKeyDown() {
     }else if (currentPage === "gigs"){
       gigsPageToMainpage();
     }else if (currentPage === "story"){
-      storyPageToMainpage;
+      storyPageToMainpage();
     }else{
       currentPage === "story"
     }

@@ -8,11 +8,15 @@ body {
   margin: 15% 12.5%;
 }*/
 
+.entire_page {
+  position: relative;
+}
+
 #test-p {
   color: white;
   text-align: center;
   font-size: 1em;
-  margin: 15% 12.5%;
+  margin: 10% 12.5%;
   word-wrap: break-word;
 }
 
@@ -28,7 +32,9 @@ ul {
 }
 
 #button-ul {
-  margin: 15% 12.5%;
+  margin: 10% 12.5%;
+  width: 70%;
+  position: absolute;
 }
 
 .buttons{
@@ -69,8 +75,10 @@ ul {
 
 #storyphotos-ul {
   display: inline-block;
-  margin: 15% 12.5%;
+  margin: 10% 12.5%;
   width: auto;
+  position: absolute;
+  z-index: 10;
 }
 
 .band-images {
