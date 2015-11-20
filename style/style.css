@@ -8,8 +8,12 @@ body {
   margin: 15% 12.5%;
 }*/
 
-.entire_page {
+#entire_page {
   position: relative;
+}
+
+#pageContent {
+  margin: 10% auto 10% auto
 }
 
 #test-p {
@@ -32,7 +36,7 @@ ul {
 }
 
 #button-ul {
-  margin: 10% 12.5%;
+  margin: 0 12.5%;
   width: 70%;
   position: absolute;
 }
@@ -75,7 +79,7 @@ ul {
 
 #storyphotos-ul {
   display: inline-block;
-  margin: 10% 12.5%;
+  margin: 0 12.5%;
   width: auto;
   position: absolute;
   z-index: 10;
