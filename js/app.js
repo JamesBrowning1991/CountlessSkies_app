@@ -9,9 +9,9 @@ var appStart = function() {
         <img id="logo" src="" alt="Countless Skies logo">
       </header>
       <div id="content">
-        <p id="test-p"></p> <!-- test-p is used for test purposes only -->
         <ul id="button-ul"></ul> <!-- header is populated with gig info in mainPageSetup -->
         <ul id="storyphotos-ul"></ul> <!-- header is populated with band photos info setupStoryPage -->
+        <p id="test-p"></p> <!-- test-p is used for test purposes only -->
       </div>`);
   mainPageSetup();
 }
@@ -44,7 +44,6 @@ var mainPageSetup = function() {
 var setupStoryPage = function () {
   currentPage = "story";
   $("#logo").animate({paddingBottom: "+=5vh"}, 1000);
-  // $("#button-ul").animate({marginTop: "+=15%"}, {duration: 1000, queue: false});
   $("#button-ul").fadeOut(1000);
   $('#storyphotos-ul').html(`
   <div class="band-images">
