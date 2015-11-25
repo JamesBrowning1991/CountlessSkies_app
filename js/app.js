@@ -2,6 +2,22 @@
 var currentPage = "";
 var jsonWorking = false;
 
+// Function to generate template html
+var appStart = function() {
+  $("body").html(`
+    <div id="entire_page">
+      <img id="logo" src="" alt="Countless Skies logo"> <!-- add src in mainPageSetup -->
+      <div id="pageContent">
+        <p id="test-p"></p> <!-- test-p is used for test purposes only -->
+        <ul id="button-ul"></ul> <!-- header is populated with gig info in mainPageSetup -->
+        <ul id="storyphotos-ul"></ul> <!-- header is populated with band photos info setupStoryPage -->
+      </div>
+    </div>
+    `);
+  mainPageSetup();
+}
+
+
 // Function to make content of Main page fade in
 var mainPageSetup = function() {
   currentPage = "main";
@@ -110,9 +126,7 @@ var gigsInfo = function() {
 
 
 // START APP
-
-// fade in on startup
-mainPageSetup();
+appStart();
 
 // Handle the back button on each page
 function onBackKeyDown() {
