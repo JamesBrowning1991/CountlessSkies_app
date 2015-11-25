@@ -4,16 +4,15 @@ var jsonWorking = false;
 
 // Function to generate template html
 var appStart = function() {
-  $("body").html(`
-    <div id="entire_page">
-      <img id="logo" src="" alt="Countless Skies logo"> <!-- add src in mainPageSetup -->
-      <div id="pageContent">
+  $("#entire-page").html(`
+      <header id="header">
+        <img id="logo" src="" alt="Countless Skies logo">
+      </header>
+      <div id="content">
         <p id="test-p"></p> <!-- test-p is used for test purposes only -->
         <ul id="button-ul"></ul> <!-- header is populated with gig info in mainPageSetup -->
         <ul id="storyphotos-ul"></ul> <!-- header is populated with band photos info setupStoryPage -->
-      </div>
-    </div>
-    `);
+      </div>`);
   mainPageSetup();
 }
 
@@ -44,8 +43,8 @@ var mainPageSetup = function() {
 // Funcation to set up Story Time page
 var setupStoryPage = function () {
   currentPage = "story";
-  $("#logo").animate({marginTop: "-=15%"}, 1000);
-  $("#button-ul").animate({marginTop: "+=15%"}, {duration: 1000, queue: false});
+  $("#logo").animate({paddingBottom: "+=5vh"}, 1000);
+  // $("#button-ul").animate({marginTop: "+=15%"}, {duration: 1000, queue: false});
   $("#button-ul").fadeOut(1000);
   $('#storyphotos-ul').html(`
   <div class="band-images">
@@ -64,15 +63,15 @@ var setupStoryPage = function () {
     <img src="images/storytime/nathan1_cropped.jpg" alt="Nathix">
     <p>Nathan Rob<p>
   </div>`);
-  $("#storyphotos-ul").animate({marginTop: "+=15%"}, {duration: 1000, queue: false});
+  // $("#storyphotos-ul").animate({marginTop: "+=15%"}, {duration: 1000, queue: false});
   $('#storyphotos-ul').fadeIn(1000);
 }
 
 // Function to set up Gigs page
 var setupGigsPage = function() {
   currentPage = "gigs";
-  $("#logo").animate({marginTop: "-=15%"}, 1000);
-  $("#button-ul").animate({marginTop: "+=15%"}, {duration: 1000, queue: false});
+  $("#logo").animate({paddingBottom: "+=5vh"}, 1000);
+  // $("#button-ul").animate({marginTop: "+=15%"}, {duration: 1000, queue: false});
   $("#button-ul").fadeOut(1000, function() {
     gigsInfo();
   })
@@ -82,17 +81,17 @@ var setupGigsPage = function() {
 var gigsPageToMainpage = function() {
   currentPage = "main";
   $("#test-p").text("");
-  $("#logo").animate({marginTop: "+=15%"}, 1000);
-  $("#button-ul").animate({marginTop: "-=15%"}, {duration: 1000, queue: false});
+  $("#logo").animate({paddingBottom: "-=5vh"}, 1000);
+  // $("#button-ul").animate({marginTop: "-=15%"}, {duration: 1000, queue: false});
   $("#button-ul").fadeIn(1000);
 }
 
 var storyPageToMainpage = function() {
   currentPage = "main";
-  $("#logo").animate({marginTop: "+=15%"}, 1000);
-  $("#storyphotos-ul").animate({marginTop: "-=15%"}, {duration: 1000, queue: false});
+  $("#logo").animate({marginBottom: "-=5vh"}, 1000);
+  // $("#storyphotos-ul").animate({marginTop: "-=15%"}, {duration: 1000, queue: false});
   $('#storyphotos-ul').fadeOut(1000);
-  $("#button-ul").animate({marginTop: "-=15%"}, {duration: 1000, queue: false});
+  // $("#button-ul").animate({marginTop: "-=15%"}, {duration: 1000, queue: false});
   $("#button-ul").fadeIn(1000);
 }
 
@@ -146,7 +145,7 @@ function onBackKeyDown() {
 
 // Handle the resume event
 function onResume() {
-  return null;
+  $('#test-p').text("RESUMED");
 }
 
 // Handle the pause event
