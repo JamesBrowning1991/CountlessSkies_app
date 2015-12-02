@@ -101,4 +101,5 @@ ul {
 
 .band-images img {
   width: 100%;
+  border-radius: 20%;
 }
