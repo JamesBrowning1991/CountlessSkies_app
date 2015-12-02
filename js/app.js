@@ -43,8 +43,8 @@ var mainPageSetup = function() {
 // Funcation to set up Story Time page
 var setupStoryPage = function () {
   currentPage = "story";
-  $("#logo").animate({paddingBottom: "+=5vh"}, 1000);
-  $("#button-ul").fadeOut(1000);
+  $("#logo").animate({'padding-bottom': "8vh"}, 600, 'ease-in-out');
+  $("#button-ul").fadeOut(600);
   $('#storyphotos-ul').html(`
   <div class="band-images">
     <img src="images/storytime/ross1_cropped.jpg" alt="Ross">
@@ -63,15 +63,15 @@ var setupStoryPage = function () {
     <p>Nathan Rob<p>
   </div>`);
   // $("#storyphotos-ul").animate({marginTop: "+=15%"}, {duration: 1000, queue: false});
-  $('#storyphotos-ul').fadeIn(1000);
+  $('#storyphotos-ul').fadeIn(600);
 }
 
 // Function to set up Gigs page
 var setupGigsPage = function() {
   currentPage = "gigs";
-  $("#logo").animate({paddingBottom: "+=5vh"}, 1000);
+  $("#logo").animate({'padding-bottom': "8vh"}, 600, 'ease-in-out');
   // $("#button-ul").animate({marginTop: "+=15%"}, {duration: 1000, queue: false});
-  $("#button-ul").fadeOut(1000, function() {
+  $("#button-ul").fadeOut(600, function() {
     gigsInfo();
   })
 }
@@ -80,18 +80,18 @@ var setupGigsPage = function() {
 var gigsPageToMainpage = function() {
   currentPage = "main";
   $("#test-p").text("");
-  $("#logo").animate({paddingBottom: "-=5vh"}, 1000);
+  $("#logo").animate({'padding-bottom': "5vh"}, 600, 'ease-in-out');
   // $("#button-ul").animate({marginTop: "-=15%"}, {duration: 1000, queue: false});
-  $("#button-ul").fadeIn(1000);
+  $("#button-ul").fadeIn(600);
 }
 
 var storyPageToMainpage = function() {
   currentPage = "main";
-  $("#logo").animate({marginBottom: "-=5vh"}, 1000);
+  $("#logo").animate({'padding-bottom': "5vh"}, 600, 'ease-in-out');
   // $("#storyphotos-ul").animate({marginTop: "-=15%"}, {duration: 1000, queue: false});
-  $('#storyphotos-ul').fadeOut(1000);
+  $('#storyphotos-ul').fadeOut(600);
   // $("#button-ul").animate({marginTop: "-=15%"}, {duration: 1000, queue: false});
-  $("#button-ul").fadeIn(1000);
+  $("#button-ul").fadeIn(600);
 }
 
 
@@ -100,9 +100,8 @@ var gigsInfo = function() {
   jsonWorking = true;
   $.ajax({
     url: "http://api.bandsintown.com/artists/CountlessSkies/events.json?app_id=officialCSMobileApp",
-    dataType: 'jsonp'
-  })
-    .done(function( data ) {
+    dataType: 'jsonp',
+    success: function( data ) {
       var dates = [];
       var venueNames = [];
       var venueCitys = [];
@@ -113,13 +112,32 @@ var gigsInfo = function() {
        $('#test-p').text("Dates: " + dates + "  Venues: " + venueNames +
         "  Venue Citys: " + venueCitys);
       })
-    })
-    .fail(function() {
+    },
+    error: function() {
         $('#test-p').text("No Internet Connection");
-    })
-    .always(function() {
+    },
+    complete: function() {
       jsonWorking = false;
-    });
+    }
+  })
+    // .success(function( data ) {
+    //   var dates = [];
+    //   var venueNames = [];
+    //   var venueCitys = [];
+    //   $.each(data, function(i, v) {
+    //     dates.push(v.datetime);
+    //     venueNames.push(v.venue.name)
+    //     venueCitys.push(v.venue.city)
+    //    $('#test-p').text("Dates: " + dates + "  Venues: " + venueNames +
+    //     "  Venue Citys: " + venueCitys);
+    //   })
+    // })
+    // .error(function() {
+    //     $('#test-p').text("No Internet Connection");
+    // })
+    // .complete(function() {
+    //   jsonWorking = false;
+    // });
 }
 
 
@@ -128,8 +146,8 @@ appStart();
 
 // Handle the back button on each page
 function onBackKeyDown() {
-  if($('#website-button').is(':animated') || $('ul').is(':animated') || jsonWorking === true) { return false; }
-  else{
+  // if($('#website-button').is(':animated') || $('ul').is(':animated') || jsonWorking === true) { return false; }
+  // else{
     if (currentPage === "main") {
       navigator.app.exitApp();
     }else if (currentPage === "gigs"){
@@ -139,7 +157,7 @@ function onBackKeyDown() {
     }else{
       currentPage === "story"
     }
-  }
+  // }
 }
 
 // Handle the resume event
@@ -154,34 +172,34 @@ function onPause() {
 
 // Make website button work
 $("#website-button").click(function() {
-  if($('#website-button').is(':animated') || $('#logo').is(':animated')) { return false; }
-  else{
+  // if($('#website-button').is(':animated') || $('#logo').is(':animated')) { return false; }
+  // else{
     var ref1 = cordova.InAppBrowser.open('http://www.countlessskies.com', '_system', 'location=yes');
-  }
+  // }
 });
 
 // Make facebook button work
 $("#facebook-button").click(function() {
-  if($('#facebook-button').is(':animated') || $('#logo').is(':animated')) { return false; }
-  else{
+  // if($('#facebook-button').is(':animated') || $('#logo').is(':animated')) { return false; }
+  // else{
     var ref2 = cordova.InAppBrowser.open('https://www.facebook.com/CountlessSkies', '_system', 'location=yes');
-  }
+  // }
 });
 
 // Make story time button work
 $('#story-button').click(function() {
-  if($('#story-button').is(':animated') || $('#logo').is(':animated')) { return false; }
-  else{
+  // if($('#story-button').is(':animated') || $('#logo').is(':animated')) { return false; }
+  // else{
     setupStoryPage();
-  }
+  // }
 })
 
 // Make gigs button work
-$('#gigs-button').click(function() {
-  if($('#gigs-button').is(':animated') || $('#logo').is(':animated')) { return false; }
-  else{
+$('#gigs-button').live('click', function() {
+  // if($('#gigs-button').is(':animated') || $('#logo').is(':animated')) { return false; }
+  // else{
     setupGigsPage();
-  }
+  // }
 })
 
 // Make #test-p go back to main work
