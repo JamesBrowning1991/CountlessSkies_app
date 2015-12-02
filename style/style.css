@@ -91,7 +91,8 @@ ul {
 
 .band-images {
   float:left;
-  width: 50%;
+  width: 46%;
+  padding: 0 1%;
 }
 
 .band-images p {
