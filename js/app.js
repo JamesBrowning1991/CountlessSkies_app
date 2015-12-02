@@ -171,7 +171,7 @@ function onPause() {
 }
 
 // Make website button work
-$("#website-button").click(function() {
+$("#website-button").live('click', function() {
   // if($('#website-button').is(':animated') || $('#logo').is(':animated')) { return false; }
   // else{
     var ref1 = cordova.InAppBrowser.open('http://www.countlessskies.com', '_system', 'location=yes');
@@ -179,7 +179,7 @@ $("#website-button").click(function() {
 });
 
 // Make facebook button work
-$("#facebook-button").click(function() {
+$("#facebook-button").live('click', function() {
   // if($('#facebook-button').is(':animated') || $('#logo').is(':animated')) { return false; }
   // else{
     var ref2 = cordova.InAppBrowser.open('https://www.facebook.com/CountlessSkies', '_system', 'location=yes');
@@ -187,7 +187,7 @@ $("#facebook-button").click(function() {
 });
 
 // Make story time button work
-$('#story-button').click(function() {
+$('#story-button').live('click', function() {
   // if($('#story-button').is(':animated') || $('#logo').is(':animated')) { return false; }
   // else{
     setupStoryPage();
