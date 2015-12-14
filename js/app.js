@@ -79,18 +79,15 @@ var setupGigsPage = function() {
 // Function to go from Gigs page back to Main page
 var gigsPageToMainpage = function() {
   currentPage = "main";
-  $("#test-p").text("");
   $("#logo").animate({'padding-bottom': "5vh"}, 600, 'ease-in-out');
-  // $("#button-ul").animate({marginTop: "-=15%"}, {duration: 1000, queue: false});
+  $('#gigs-table').fadeOut(600, function() {$("#gigs-table").remove();});
   $("#button-ul").fadeIn(600);
 }
 
 var storyPageToMainpage = function() {
   currentPage = "main";
   $("#logo").animate({'padding-bottom': "5vh"}, 600, 'ease-in-out');
-  // $("#storyphotos-ul").animate({marginTop: "-=15%"}, {duration: 1000, queue: false});
   $('#storyphotos-ul').fadeOut(600);
-  // $("#button-ul").animate({marginTop: "-=15%"}, {duration: 1000, queue: false});
   $("#button-ul").fadeIn(600);
 }
 
@@ -102,16 +99,60 @@ var gigsInfo = function() {
     url: "http://api.bandsintown.com/artists/CountlessSkies/events.json?app_id=officialCSMobileApp",
     dataType: 'jsonp',
     success: function( data ) {
+      var datetimes = [];
       var dates = [];
+      var times = [];
       var venueNames = [];
       var venueCitys = [];
       $.each(data, function(i, v) {
-        dates.push(v.datetime);
+        datetimes.push(v.datetime);
         venueNames.push(v.venue.name)
         venueCitys.push(v.venue.city)
-       $('#test-p').text("Dates: " + dates + "  Venues: " + venueNames +
-        "  Venue Citys: " + venueCitys);
-      })
+        })
+
+      // split dates and times up
+      for(i in datetimes){
+        dates[i] = datetimes[i].slice(0, datetimes[i].indexOf("T"));
+        times[i] = datetimes[i].slice((datetimes[i].indexOf("T"))+1);
+      }
+
+      //format date better
+      for (i in dates){
+        var year = dates[i].slice(0,4);
+        var month = dates[i].slice(5,7);
+        var day = dates[i].slice(8);
+        dates[i] = (day + '/' + month + '/' + year);
+      }
+
+      //format time better
+      for (i in times){
+        times[i] = times[i].slice(0, -3);
+      }
+
+        $('#content').append(`
+          <table id=gigs-table>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Venue</th>
+              <th>City</th>
+            </tr>
+          </table`)
+
+        for(i in datetimes) {
+          var date = dates[i]
+          var time = times[i]
+          var venue = venueNames[i]
+          var city = venueCitys[i]
+          $('#content table').append(`
+            <tr>
+              <td>` + date + `</td>
+              <td>` + time + `</td>
+              <td>` + venue + `</td>
+              <td>` + city + `</td>
+            </tr>
+          `)
+        }
     },
     error: function() {
         $('#test-p').text("No Internet Connection");
@@ -162,7 +203,7 @@ function onBackKeyDown() {
 
 // Handle the resume event
 function onResume() {
-  $('#test-p').text("RESUMED");
+
 }
 
 // Handle the pause event

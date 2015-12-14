@@ -25,6 +25,11 @@
 
     <!-- icons -->
     <icon src="icon.png" />
+    <icon src="res/mipmap-mdpi/icon.png" platform="android" qualifier="mdpi" />
+    <icon src="res/mipmap-hdpi/icon.png" platform="android" qualifier="hdpi" />
+    <icon src="res/mipmap-xhdpi/icon.png" platform="android" qualifier="xhdpi" />
+    <icon src="res/mipmap-xxhdpi/icon.png" platform="android" qualifier="xxhdpi" />
+    <icon src="res/mipmap-xxxhdpi/icon.png" platform="android" qualifier="xxxhdpi" />
 
     <!-- Features -->
     <feature name="http://api.phonegap.com/1.0/network" />
