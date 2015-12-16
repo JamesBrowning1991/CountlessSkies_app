@@ -8,8 +8,8 @@ ul {
 }
 
 table {
-  margin: 0 5vw;
-  width:auto;
+  margin: 5vw 5vw;
+  width: auto;
   font-size: 1em;
   border: 1.2px solid white;
   color: white;
@@ -31,14 +31,15 @@ table td {
 
 #header {
   position: relative;
-  height: 30vh;
+  height: 20vh;
   width: auto;
 }
 
 #content {
-  /*position: relative;*/
-  height: 70vh;
+  position: relative;
+  height: 80vh;
   width: auto;
+  /*z-index: 5;*/
 }
 
 #test-p {
@@ -49,14 +50,12 @@ table td {
   word-wrap: break-word;
 }
 
-
-
 #logo {
   bottom: 0;
   width: 90%;
   height: auto;
   margin: 0 5vw;
-  padding: 0 0 5vh 0;
+  padding: 0;
   position: absolute;
   /*z-index: 20;*/
 }
@@ -64,9 +63,9 @@ table td {
 #button-ul {
   margin: 0 15%;
   width: 70%;
-  padding: 5vh 0 0 0;
+  padding: 15vh 0 0 0;
   position: absolute;
-  /*z-index: 5;*/
+  /*z-index: 10;*/
 }
 
 .buttons{
@@ -116,7 +115,7 @@ table td {
 .band-images {
   float:left;
   width: 46%;
-  padding: 0 1%;
+  padding: 10px 1%;
 }
 
 .band-images p {

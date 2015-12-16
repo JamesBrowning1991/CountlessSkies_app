@@ -1,6 +1,7 @@
 // Global variables
 var currentPage = "";
 var jsonWorking = false;
+var isAnimating = false;
 
 // Function to generate template html
 var appStart = function() {
@@ -43,7 +44,8 @@ var mainPageSetup = function() {
 // Funcation to set up Story Time page
 var setupStoryPage = function () {
   currentPage = "story";
-  $("#logo").animate({'padding-bottom': "8vh"}, 600, 'ease-in-out');
+  isAnimating = true;
+  $("#logo").animate({'padding-bottom': '5vh', scaleY: '0.8', scaleX: '0.8'}, 600, 'ease-in-out');
   $("#button-ul").fadeOut(600);
   $('#storyphotos-ul').html(`
   <div class="band-images">
@@ -62,15 +64,14 @@ var setupStoryPage = function () {
     <img src="images/storytime/nathan1_cropped.jpg" alt="Nathix">
     <p>Nathan Rob<p>
   </div>`);
-  // $("#storyphotos-ul").animate({marginTop: "+=15%"}, {duration: 1000, queue: false});
-  $('#storyphotos-ul').fadeIn(600);
+  $('#storyphotos-ul').fadeIn(600, function() {isAnimating = false;});
 }
 
 // Function to set up Gigs page
 var setupGigsPage = function() {
   currentPage = "gigs";
-  $("#logo").animate({'padding-bottom': "8vh"}, 600, 'ease-in-out');
-  // $("#button-ul").animate({marginTop: "+=15%"}, {duration: 1000, queue: false});
+  isAnimating = true;
+  $("#logo").animate({'padding-bottom': '5vh', scaleY: '0.8', scaleX: '0.8'}, 600, 'ease-in-out');
   $("#button-ul").fadeOut(600, function() {
     gigsInfo();
   })
@@ -79,16 +80,22 @@ var setupGigsPage = function() {
 // Function to go from Gigs page back to Main page
 var gigsPageToMainpage = function() {
   currentPage = "main";
-  $("#logo").animate({'padding-bottom': "5vh"}, 600, 'ease-in-out');
-  $('#gigs-table').fadeOut(600, function() {$("#gigs-table").remove();});
-  $("#button-ul").fadeIn(600);
+  isAnimating = true;
+  $("#logo").animate({'padding-bottom': '0', scaleY: '1', scaleX: '1'}, 600, 'ease-in-out');
+  $('#gigs-table').fadeOut(600, function() {
+    $("#button-ul").fadeIn(600, function(){
+      $("#gigs-table").remove();});
+      isAnimating = false;
+    });
 }
 
 var storyPageToMainpage = function() {
   currentPage = "main";
-  $("#logo").animate({'padding-bottom': "5vh"}, 600, 'ease-in-out');
-  $('#storyphotos-ul').fadeOut(600);
-  $("#button-ul").fadeIn(600);
+  isAnimating = true;
+  $("#logo").animate({'padding-bottom': '0', scaleY: '1', scaleX: '1'}, 600, 'ease-in-out');
+  $('#storyphotos-ul').fadeOut(600, function() {
+    $("#button-ul").fadeIn(600, function() {isAnimating = false;});
+  });
 }
 
 
@@ -155,41 +162,24 @@ var gigsInfo = function() {
         }
     },
     error: function() {
-        $('#test-p').text("No Internet Connection");
+        $('#content').html("<p>No Internet Connection</p>");
     },
     complete: function() {
       jsonWorking = false;
+      isAnimating = false;
     }
   })
-    // .success(function( data ) {
-    //   var dates = [];
-    //   var venueNames = [];
-    //   var venueCitys = [];
-    //   $.each(data, function(i, v) {
-    //     dates.push(v.datetime);
-    //     venueNames.push(v.venue.name)
-    //     venueCitys.push(v.venue.city)
-    //    $('#test-p').text("Dates: " + dates + "  Venues: " + venueNames +
-    //     "  Venue Citys: " + venueCitys);
-    //   })
-    // })
-    // .error(function() {
-    //     $('#test-p').text("No Internet Connection");
-    // })
-    // .complete(function() {
-    //   jsonWorking = false;
-    // });
 }
 
 
 // START APP
 appStart();
 
-// Handle the back button on each page
+// Handle the back button at all times
 function onBackKeyDown() {
-  // if($('#website-button').is(':animated') || $('ul').is(':animated') || jsonWorking === true) { return false; }
-  // else{
-    if (currentPage === "main") {
+    if (isAnimating == true) {
+      return false;
+    }else if (currentPage === "main") {
       navigator.app.exitApp();
     }else if (currentPage === "gigs"){
       gigsPageToMainpage();
@@ -198,12 +188,11 @@ function onBackKeyDown() {
     }else{
       currentPage === "story"
     }
-  // }
 }
 
 // Handle the resume event
 function onResume() {
-
+  return null;
 }
 
 // Handle the pause event
@@ -213,37 +202,48 @@ function onPause() {
 
 // Make website button work
 $("#website-button").live('click', function() {
-  // if($('#website-button').is(':animated') || $('#logo').is(':animated')) { return false; }
-  // else{
+  if (isAnimating == true) {
+    return false;
+  }else{
     var ref1 = cordova.InAppBrowser.open('http://www.countlessskies.com', '_system', 'location=yes');
-  // }
+  }
 });
 
 // Make facebook button work
 $("#facebook-button").live('click', function() {
-  // if($('#facebook-button').is(':animated') || $('#logo').is(':animated')) { return false; }
-  // else{
+  if (isAnimating == true) {
+    return false;
+  }else{
     var ref2 = cordova.InAppBrowser.open('https://www.facebook.com/CountlessSkies', '_system', 'location=yes');
-  // }
+  }
 });
 
 // Make story time button work
 $('#story-button').live('click', function() {
-  // if($('#story-button').is(':animated') || $('#logo').is(':animated')) { return false; }
-  // else{
+  if (isAnimating == true) {
+    return false;
+  }else{
     setupStoryPage();
-  // }
+  }
 })
 
 // Make gigs button work
 $('#gigs-button').live('click', function() {
-  // if($('#gigs-button').is(':animated') || $('#logo').is(':animated')) { return false; }
-  // else{
+  if (isAnimating == true) {
+    return false;
+  }else{
     setupGigsPage();
-  // }
+  }
 })
 
-// Make #test-p go back to main work
-$("#test-p").click(function() {
-  gigsPageToMainpage();
-});
+$('#content').live('click', function() {
+  if (isAnimating == true) {
+    return false;
+  }else if (currentPage === "gigs"){
+    gigsPageToMainpage();
+  }else if (currentPage === "story"){
+    storyPageToMainpage();
+  }else{
+    currentPage === "story"
+  }
+})
