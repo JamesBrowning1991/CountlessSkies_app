@@ -1,7 +1,7 @@
 // Global variables
 var currentPage = "";
 var jsonWorking = false;
-var isAnimating = false;
+var isAnimating = true;
 
 // Function to generate template html
 var appStart = function() {
@@ -13,7 +13,9 @@ var appStart = function() {
         <ul id="button-ul"></ul> <!-- header is populated with gig info in mainPageSetup -->
         <ul id="storyphotos-ul"></ul> <!-- header is populated with band photos info setupStoryPage -->
         <p id="test-p"></p> <!-- test-p is used for test purposes only -->
-      </div>`);
+      </div>
+      <button id=debugback>DebugBack</button>`  //debug back button
+    );
   mainPageSetup();
 }
 
@@ -38,33 +40,36 @@ var mainPageSetup = function() {
       <a class="buttons">Gigs</a>
     </div>`);
   $("#logo").fadeIn(1000);
-  $("#button-ul").fadeIn(1000);
+  $("#button-ul").fadeIn(1000, function() {
+    isAnimating = false;
+  });
 }
 
-// Funcation to set up Story Time page
+// Function to set up Story Time page
 var setupStoryPage = function () {
   currentPage = "story";
   isAnimating = true;
   $("#logo").animate({'padding-bottom': '5vh', scaleY: '0.8', scaleX: '0.8'}, 600, 'ease-in-out');
-  $("#button-ul").fadeOut(600);
-  $('#storyphotos-ul').html(`
-  <div class="band-images">
-    <img src="images/storytime/ross1_cropped.jpg" alt="Ross">
-    <p>Rose King<p>
-  </div>
-  <div class="band-images">
-    <img src="images/storytime/pratt2_cropped.jpg" alt="Pratt">
-    <p>James Pratt<p>
-  </div>
-  <div class="band-images">
-    <img src="images/storytime/phil2_cropped.jpg" alt="Phil">
-    <p>Phil Romeo<p>
-  </div>
-  <div class="band-images">
-    <img src="images/storytime/nathan1_cropped.jpg" alt="Nathix">
-    <p>Nathan Rob<p>
-  </div>`);
-  $('#storyphotos-ul').fadeIn(600, function() {isAnimating = false;});
+  $("#button-ul").fadeOut(600, function() {
+    $('#storyphotos-ul').html(`
+    <div class="band-images">
+      <img src="images/storytime/ross1_cropped.jpg" alt="Ross" id="ross_face">
+      <p>Rose King<p>
+    </div>
+    <div class="band-images id="pratt_face"">
+      <img src="images/storytime/pratt2_cropped.jpg" alt="Pratt">
+      <p>James Pratt<p>
+    </div>
+    <div class="band-images id=phil_face">
+      <img src="images/storytime/phil2_cropped.jpg" alt="Phil">
+      <p>Phil Romeo<p>
+    </div>
+    <div class="band-images id=nathan_face">
+      <img src="images/storytime/nathan1_cropped.jpg" alt="Nathan">
+      <p>Nathan Rob<p>
+    </div>`);
+    $('#storyphotos-ul').fadeIn(600, function() {isAnimating = false;});
+  });
 }
 
 // Function to set up Gigs page
@@ -83,10 +88,11 @@ var gigsPageToMainpage = function() {
   isAnimating = true;
   $("#logo").animate({'padding-bottom': '0', scaleY: '1', scaleX: '1'}, 600, 'ease-in-out');
   $('#gigs-table').fadeOut(600, function() {
+    $("#gigs-table").remove();
     $("#button-ul").fadeIn(600, function(){
-      $("#gigs-table").remove();});
       isAnimating = false;
     });
+  });
 }
 
 var storyPageToMainpage = function() {
@@ -94,7 +100,10 @@ var storyPageToMainpage = function() {
   isAnimating = true;
   $("#logo").animate({'padding-bottom': '0', scaleY: '1', scaleX: '1'}, 600, 'ease-in-out');
   $('#storyphotos-ul').fadeOut(600, function() {
-    $("#button-ul").fadeIn(600, function() {isAnimating = false;});
+    $('#storyphotos-ul').hide();
+    $("#button-ul").fadeIn(600, function() {
+      isAnimating = false;
+    });
   });
 }
 
@@ -116,6 +125,9 @@ var gigsInfo = function() {
         venueNames.push(v.venue.name)
         venueCitys.push(v.venue.city)
         })
+
+      if(datetimes.length > 0){
+      //datetimes array is not empty display table
 
       // split dates and times up
       for(i in datetimes){
@@ -160,6 +172,11 @@ var gigsInfo = function() {
             </tr>
           `)
         }
+
+      }else{
+      //datetimes array is empty no table
+      $('#content').html("<p>No Gigs Confirmed at this time</p>");
+      }
     },
     error: function() {
         $('#content').html("<p>No Internet Connection</p>");
@@ -225,7 +242,7 @@ $('#story-button').live('click', function() {
   }else{
     setupStoryPage();
   }
-})
+});
 
 // Make gigs button work
 $('#gigs-button').live('click', function() {
@@ -234,9 +251,9 @@ $('#gigs-button').live('click', function() {
   }else{
     setupGigsPage();
   }
-})
+});
 
-$('#content').live('click', function() {
+$('#debugback').live('click', function() {
   if (isAnimating == true) {
     return false;
   }else if (currentPage === "gigs"){
